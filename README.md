@@ -1,4 +1,6 @@
 // Netflix-Gpt
-  - created Login page 
-  - enabled authentication
-  
+  - created Sign in and Sign Up 
+  - form validation
+  - Firebase setup for authentication
+  - redux setup
+  - authentication logic 
