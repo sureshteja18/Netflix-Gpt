@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import React from "react";
 import Header from "./Header";
 import { passwordValidate } from "../utils/Validate";
@@ -8,18 +8,31 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/Firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [isErrorMessage, setIsErrorMessage] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const displayName = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+  const user = useSelector(store=>store.user)
+
+  
+
+  useEffect(()=>{
+      if(user && location.pathname ==='/'){
+        navigate('/browser')
+      }
+  },[user,navigate, location.pathname])
 
   const handleButtonClick = () => {
+
     const message = passwordValidate(
       email.current.value,
       password.current.value
@@ -53,7 +66,7 @@ const Login = () => {
               dispatch(
                 addUser({ uid: uid, email: email, displayName: displayName })
               );
-        
+              navigate('/browser')
             })
             .catch((error) => {
               console.log(error);
@@ -76,7 +89,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-    
+          navigate('/browser')
         })
         .catch((error) => {
           const errorCode = error.code;

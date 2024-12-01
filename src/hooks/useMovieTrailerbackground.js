@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
-import { addMovieTrailer } from '../utils/movieSlice';
+import { fetchMovieVideos } from '../utils/movieSlice';
 import { API_OPTIONS } from '../utils/constants';
 
 const useMovieTrailerbackground = (movieId) => {
@@ -19,12 +19,12 @@ const useMovieTrailerbackground = (movieId) => {
   
 
   
-      dispatch(addMovieTrailer(trailer));
+      dispatch(fetchMovieVideos(trailer));
     };
   
     useEffect(() => {
       playmovieVideo();
-    }, [movieId]);
+    }, []);
 }
 
 export default useMovieTrailerbackground

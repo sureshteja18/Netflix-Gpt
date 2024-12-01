@@ -9,12 +9,12 @@ export const MainDisplayMovieContainer = () => {
 
     if(!movies) return;
 
-    const mainMovie = movies[3]
+    const mainMovie = movies[2]
 
     const {original_title, overview, id} = mainMovie
   return (
     <>
-    <MainVideoTitle title={original_title} overview={overview}/>
+    <MainVideoTitle title={original_title} overview={overview} movieId={id}/>
     <MainVideoBackground  movieId={id}/>
     </>
 

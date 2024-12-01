@@ -1,31 +1,40 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from './Header'
-import useNowPlayingMovies from '../hooks/useNowPlayingMovies'
 import { MainDisplayMovieContainer } from './MainDisplayMovieContainer'
 import MovieListContainer from './MovieListContainer'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchNowPlayingMovies, fetchPopularMovies, fetchTopRatedMovies, fetchUpcomingMovies } from '../utils/movieSlice'
 
 const Browser = () => {
+  const dispatch = useDispatch()
+  const {  status, error } = useSelector((store) => store.movie)
 
-useNowPlayingMovies()
+  useEffect(() => {
+    dispatch(fetchNowPlayingMovies())
+    dispatch(fetchPopularMovies())
+    dispatch(fetchTopRatedMovies())
+    dispatch(fetchUpcomingMovies())
+  }, [dispatch])
+
+  // if (status === 'loading') {
+  //   return <div>Loading...</div>
+  // }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>
+  }
 
   return (
     <>
-    <div className='flex justify-between'>
+      <div className='flex justify-between'>
         <Header />
         <div>
-        <MainDisplayMovieContainer/>
-        <MovieListContainer/>
+          <MainDisplayMovieContainer />
+          <MovieListContainer />
         </div>
-    </div>
-    
+      </div>
     </>
   )
 }
-
-//maincontainer
- //-moviedata
- //-backgroundmovietrailer
-//secondaycontainer
- //-displaymovielists
 
 export default Browser

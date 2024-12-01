@@ -20,10 +20,12 @@ const Header = () => {
         // https://firebase.google.com/docs/reference/js/auth.user
         const { uid, email, displayName } = user;
         dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
-        navigate("/browser");
+        // navigate("/browser");
       } else {
         dispatch(removeUser());
-        navigate("/");
+        if (window.location.pathname !== "/") {
+          navigate("/");
+        }
       }
     });
   }, []);
